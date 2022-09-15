@@ -1,0 +1,28 @@
+{% extends 'layout/layout.html' %}
+
+{%block css %}
+<link rel="stylesheet" href="{{url_for('static',filename='css/pages/end_of_sem.css')}}">
+{%endblock %}
+
+{%block content %}
+    <section class="container my-4">
+        <h1 class="text-center">{{data.course_title}}</h1>
+        <div class="container content-wrapper d-md-flex justify-content-evenly align-items-center pb-3 pt-5">
+            <div class="embed-responsive w-40">
+                <iframe src="{{url_for('static',filename='questions/admission.pdf')}}" class="embed-responsive-item "></iframe>
+                <a href="/questions/selected/admission.pdf">
+                    <h3 class="text-start text">Question 1</h3>
+                </a>
+             </div> 
+             <div class="embed-responsive w-40 ">
+                <iframe src="{{url_for('static',filename='questions/admission.pdf')}}" class="embed-responsive-item"></iframe>
+                <h3 class="text-start text">Question 2</h3>
+             </div> 
+        </div>
+        <div class="container my-2 d-flex justify-content-end">
+            <a href="/questions/selected/questions/admission.pdf" id="go-back">
+                <button class="btn btn-secondary ash-btn text-black border-0 px-3">&larr; Go Back</button>
+            </a>
+        </div>
+    </section>
+{%endblock %}

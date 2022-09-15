@@ -1,0 +1,23 @@
+{% extends 'layout/layout.html' %}
+
+{%block content %}
+    <section class="container d-md-flex align-items-center ">
+        <div class="container py-0">
+            <img src="{{url_for('static',filename='img/home.jpg')}}" alt="A boy reading" class="img-fluid">
+        </div>
+        <div class="container  justify-content-between">
+            <p class="h2 text-start mb-3">Get Ready for
+                your Next Exams</p>
+            <p>
+                PasQuo is an online portal for past
+                questions from officially published
+                UENR examinations.
+            </p>
+            <a href="/user-select">
+                <button class="btn btn-secondary ash-btn text-black px-3">
+                    START
+                </button>
+            </a>
+        </div>
+    </section>
+{%endblock %}

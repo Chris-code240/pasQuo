@@ -1,0 +1,68 @@
+{% extends 'layout/layout.html' %}
+{% block css %}
+<link rel="stylesheet" href="{{url_for('static',filename='css/pages/select-paper.css')}}">
+{% endblock %}
+{%block content %}
+    <section class="container d-flex flex-column align-items-center justify-content-center p-3">
+        <div class="container my-2">
+            <h1 class="text-center h1">
+                Make a Choice
+            </h1>
+            <p class="text-center w-10">
+                Choose from a list of all past
+                questions in the university's domain from 2017 to date .
+            </p>
+        </div>
+        <div class="container bg-secondary  px-5 py-2 rounded-lg d-flex justify-content-center align-items-center form-wrapper">
+            <form action="/questions" class="form text-center p-0 w-100">
+                    
+                <div class="container">
+                    <label for="year" class="label form-control form-wrapper border-0 text-start">Year</label>
+                    <select class="level form-control  form-data bg-black text-white" id="year" name="year">
+                        <option value="--select level--">--Select Year--</option>
+                        <option value="2017">2017</option>
+                        <option value="2018">2018</option>
+                        <option value="2019">2019</option>
+                        <option value="2020">2020</option>
+                        <option value="2021">2021</option>
+                    </select>
+                </div>
+                <div class="container w-20">
+                    <label for="program" class="label form-control form-wrapper border-0 text-start">Program</label>
+                    <select class="level form-control form-data bg-black text-white" id="program" name="program">
+                        <option value="--select program--">--Select Program--</option>
+                        <option value="Bsc Computer Science">Bsc Computer Science</option>
+                        <option value="Bsc Information Technology">Bsc Information Technology</option>
+                    </select>
+                </div>
+    
+    
+                <div class="container">
+                    <label for="course" class="label form-control form-wrapper border-0 text-start">Course</label>
+                    <select class="level form-control  form-data bg-black text-white" id="course" name="course">
+                        <option value="--select course--">--Select Course--</option>
+                        <option value="100">Advanced</option>
+                        <option value="200">Numerical Methods</option>
+                        <option value="300">Software Enginerring</option>
+                        <option value="400">Computer Architecture</option>
+                    </select>
+                </div>
+                
+                <div class="container">
+                    <label for="level" class="label form-control form-wrapper border-0 text-start">Level</label>
+                    <select class="level form-control  form-data bg-black text-white" id="level" name="level">
+                        <option value="--select level--">--Select Level--</option>
+                        <option value="100">100</option>
+                        <option value="200">200</option>
+                        <option value="300">300</option>
+                        <option value="400">400</option>
+                    </select>
+                </div>
+
+                <div class="container">
+                    <button type="submit" class="btn btn-secondary bg-black text-white text-start px-4 my-3">Search</button>
+                </div>
+            </form>
+        </div>
+    </section>
+{%endblock %}

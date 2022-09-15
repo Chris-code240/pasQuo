@@ -1,0 +1,25 @@
+{% extends 'layout/layout.html' %}
+
+{%block css %}
+<link rel="stylesheet" href="{{url_for('static',filename='css/pages/selected.css')}}">
+{%endblock %}
+
+{%block content %}
+    <section class="container my-4 py-5">
+        <div class="container embed-responsive w-100">
+            <iframe src="{{url_for('static',filename=document)}}" class="embed-responsive-item" frameborder="0"></iframe>
+        </div>
+        <div class="container btn-wrapper d-flex justify-content-end my-3 align-items-center">
+                <button class="btn btn-secondary px-5 py-2 " id="go-back">&larr;Go Back</button>
+                <a href="#">
+                    <button class="btn btn-secondary px-5 py-2 " id="next">Next &rarr;</button>
+                </a>
+        </div>
+    </section>
+    <script>
+        let back = document.getElementById('go-back')
+        back.addEventListener('click',()=>{
+            history.back()
+        })
+    </script>
+{%endblock %}
