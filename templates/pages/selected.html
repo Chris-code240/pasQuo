@@ -5,18 +5,22 @@
 {%endblock %}
 
 {%block content %}
-    <section class="container my-4 py-5">
+    <section class="container">
+        <h1 class="text-center my-2">{{course_title}}</h1>
+        <div class="container wrapper py-2">
         <div class="container embed-responsive w-100">
-            <iframe src="{{url_for('static',filename=document)}}" class="embed-responsive-item" frameborder="0"></iframe>
+            <iframe src="/show-question/{{id}}" class="embed-responsive-item" frameborder="0"></iframe>
         </div>
         <div class="container btn-wrapper d-flex justify-content-end my-3 align-items-center">
-                <button class="btn btn-secondary px-5 py-2 " id="go-back">&larr;Go Back</button>
+                <button class="btn btn-secondary px-5 py-2 " id="go-back">&xlarr;Go Back</button>
                 <a href="#">
-                    <button class="btn btn-secondary px-5 py-2 " id="next">Next &rarr;</button>
+                    <button class="btn btn-secondary px-5 py-2 " id="next">Next &xrarr;</button>
                 </a>
+        </div>
         </div>
     </section>
     <script>
+        document.getElementsByTagName('nav')[0].remove()
         let back = document.getElementById('go-back')
         back.addEventListener('click',()=>{
             history.back()

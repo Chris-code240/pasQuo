@@ -1,8 +1,12 @@
-{% extends 'layout/layout.html' %}
-{% block css %}
-<link rel="stylesheet" href="{{url_for('static',filename='css/pages/library.css')}}">
-{% endblock %}
-{%block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
     <section class="container d-flex flex-column align-items-center justify-content-center p-3">
         <div class="container my-2">
             <h1 class="text-center">
@@ -14,7 +18,7 @@
             </p>
         </div>
         <div class="container bg-secondary  p-5 rounded-lg d-flex justify-content-center align-items-center form-wrapper">
-            <form  id="form" class="form text-center p-0 w-100 form-control form-wrapper" action="{{url_for('get_questions')}}" method="GET">
+            <form id="library-form" class="form text-center p-0 w-100 form-control form-wrapper" >
                 <div class="container w-20">
                     <select class="level form-control py-2 my-3 form-data bg-black text-white" id="program" name="program">
                         <option value="--select program--" class="form-control">--Select Program--</option>
@@ -40,7 +44,6 @@
                         <option value="Numerical Methods" class="form-control">Numerical Methods</option>
                         <option value="Software Engineering" class="form-control">Software Enginerring</option>
                         <option value="Computer Architecture" class="form-control">Computer Architecture</option>
-                        <option value="Analytical Reading and Reasoning" class="form-control">Analytical Reading and Reasoning</option>
                     </select>
                 </div>
                 
@@ -53,29 +56,28 @@
                         <option value="2019" class="form-control">2019</option>
                         <option value="2020" class="form-control">2020</option>
                         <option value="2021" class="form-control">2021</option>
-                        <option value="2022" class="form-control">2022</option>
                     </select>
                 </div>
                 <div class="container d-flex justify-content-end">
-                    <button type="submit" class="btn btn-secondary bg-black text-white  px-5">Search</button>
+                    <button type="submit" id="submit" class="btn btn-secondary bg-black text-white  px-5">Search</button>
                 </div>
             </form>
         </div>
     </section>
     <script>
-       // let form = document.getElementById('form')
-        //form.onsubmit = (e)=>{
-            
-          //  let year = document.getElementById('year').value
-            //let prog = document.getElementById('program').value
-            //let level = document.getElementById('level').value
-            //let course = document.getElementById('course').value
+        let form = document.getElementById('library-form')
+        document.getElementById('submit').onclick = ()=>{
+            let year = document.getElementById('year').value
+            let prog = document.getElementById('program').value
+            let level = document.getElementById('level').value
+            let course = document.getElementById('course').value
 
-            //let req = new XMLHttpRequest()
-            //req.setRequestHeader('Content-Type','application/json')
-            //req.open('GET','/question')
-           // req.send(JSON.stringify({"year":year,"program":prog,"level":level,"course":course}))
-            //alert(Request.arguments)
-        //}
+            let req = new XMLHttpRequest()
+            req.setRequestHeader('Content-Type','application/json')
+            req.open('POST','/test-form')
+            req.send(JSON.stringify({"year":year,"program":prog,"level":level,"course":course}))
+
+        }
     </script>
-{%endblock %}
+</body>
+</html>

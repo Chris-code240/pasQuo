@@ -2,7 +2,7 @@ iframe{
     height: 100vh;
     width: 80%;
 }
-section{
+.wrapper{
     background-color: #d9d9d9 !important;
 }
 

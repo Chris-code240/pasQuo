@@ -8,31 +8,34 @@
             <h1 class="text-center h1">
                 Upload Question Paper
             </h1>
+           <div class="container">
             <p class="text-center w-10">
                 Add to a list of all past
-                questions in the university's domain from 2017 to date .
+                questions in the university's domain from 2017.
             </p>
+           </div>
         </div>
         <div class="container bg-secondary  px-5 py-2 rounded-lg d-flex justify-content-center align-items-center form-wrapper">
-            <form action="/questions" class="form text-center p-0 w-100" id="upload-form" name="upload-form" >
+            <form action="/questions" class="form text-center p-0 w-100" id="upload-form" name="upload-form" method="POST" enctype="multipart/form-data" >
                     
                 <div class="container">
                     <label for="year" class="label form-control form-wrapper border-0 text-start">Year</label>
                     <select class="level form-control  form-data bg-black text-white" id="year" name="year">
                         <option value="--select level--">--Select Year--</option>
-                        <option value="2017">2017</option>
-                        <option value="2018">2018</option>
-                        <option value="2019">2019</option>
-                        <option value="2020">2020</option>
-                        <option value="2021">2021</option>
+                        <option value="2017" class="form-control">2017</option>
+                        <option value="2018" class="form-control">2018</option>
+                        <option value="2019" class="form-control">2019</option>
+                        <option value="2020" class="form-control">2020</option>
+                        <option value="2021" class="form-control">2021</option>
+                        <option value="2022" class="form-control">2022</option>
                     </select>
                 </div>
                 <div class="container w-20">
                     <label for="program" class="label form-control form-wrapper border-0 text-start">Program</label>
                     <select class="level form-control form-data bg-black text-white" id="program" name="program">
                         <option value="--select program--">--Select Program--</option>
-                        <option value="Bsc Computer Science">Bsc Computer Science</option>
-                        <option value="Bsc Information Technology">Bsc Information Technology</option>
+                        <option value="Bsc Computer Science" class="form-control">Bsc Computer Science</option>
+                        <option value="Bsc Information Technology" class="form-control">Bsc Information Technology</option>
                     </select>
                 </div>
     
@@ -41,45 +44,46 @@
                     <label for="course" class="label form-control form-wrapper border-0 text-start">Course</label>
                     <select class="level form-control  form-data bg-black text-white" id="course" name="course">
                         <option value="--select course--">--Select Course--</option>
-                        <option value="100">Advanced</option>
-                        <option value="200">Numerical Methods</option>
-                        <option value="300">Software Enginerring</option>
-                        <option value="400">Computer Architecture</option>
+                        <option value="Advanced Database" class="form-control">Advanced</option>
+                        <option value="Numerical Methods" class="form-control">Numerical Methods</option>
+                        <option value="Software Engineering" class="form-control">Software Enginerring</option>
+                        <option value="Computer Architecture" class="form-control">Computer Architecture</option>
+                        <option value="Data Communication and Network" class="form-control">Data Communication and Network</option>
+                        <option value="Analytical Reading and Reasoning" class="form-control">Analytical Reading and Reasoning</option>
                     </select>
                 </div>
-                
                 <div class="container">
-                    <label for="question-paper" class="label form-control form-wrapper border-0 text-start">Select File</label>
-                    <input type="file" class="form-control form-data my-2 bg-black text-white" name="question-paper" id="question-paper">
+                    <label for="level" class="label form-control form-wrapper border-0 text-start">Level</label>
+                    <select class="level form-control  form-data bg-black text-white" id="level" name="level">
+                        <option value="--select level--">--Select Year--</option>
+                        <option value="100" class="form-control">100</option>
+                        <option value="200" class="form-control">200</option>
+                        <option value="300" class="form-control">300</option>
+                        <option value="400" class="form-control">400</option>
+                    </select>
                 </div>
 
                 <div class="container">
-                    <button type="submit" class="btn btn-secondary bg-black text-white text-start px-5 my-3">Add</button>
+                    <label for="level" class="label form-control form-wrapper border-0 text-start">Semester</label>
+                    <select class="level form-control  form-data bg-black text-white" id="semester" name="semester">
+                        <option value="--select level--">--Select Semester--</option>
+                        <option value="Semester 1" class="form-control">1</option>
+                        <option value="Semester 2" class="form-control">2</option>
+                    </select>
+                </div>
+
+                <div class="container my-2">
+                    <label for="question-paper" class="label form-control form-wrapper border-0 text-start">Select File</label>
+                    <input type="file" class="form-control form-data  bg-black text-white" name="question-paper" id="question-paper">
+                </div>
+
+                <div class="container">
+                    <button type="submit" class="btn btn-secondary bg-black text-white text-start px-5 py-2 my-3">Add</button>
                 </div>
             </form>
         </div>
     </section>
     <script>
-        
-        let form = document.getElementById('upload-form')
-        let data = new FormData(form)
-        form.addEventListener('submit',(e)=>{
-            e.preventDefault()
-            jQuery.each(jQuery('#question-paper')[0].files, function(i, file) {
-                data.append('file-'+i, file);
-            });
-            jQuery.ajax({
-                url: '/questions',
-                data: data,
-                cache: false,
-                contentType: false,
-                processData: false,
-                method: 'POST',
-                type: 'POST', // For jQuery < 1.9
-                success: function(data){
-                    alert(data);
-                }
-            });
-        },false)
+       
     </script>
 {%endblock %}

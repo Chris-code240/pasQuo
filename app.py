@@ -1,13 +1,52 @@
-
+from io import BytesIO
 import os
-from flask import Flask,request,abort,json,jsonify,render_template,url_for
+from flask import Flask,request,abort,json,jsonify,render_template,url_for,flash,send_file,Response
+from werkzeug.utils import secure_filename
+from flask_wtf import FlaskForm
+
+import wtforms
+from models import *
+
 
 
 app = Flask(__name__)
+app.config.from_object('config')
 
 current_years = ["2021","2020","2019","2018","2017"]
-APP_ROOT = os.path.dirname(os.path.abspath(__file__))
-UPLOAD_FOLDER = os.path.join(APP_ROOT,'static','questions')
+# APP_ROOT = os.path.dirname(os.path.abspath(__file__))
+# UPLOAD_FOLDER = os.path.join(APP_ROOT,'static','questions')
+
+UPLOAD_FOLDER = 'static/questions'
+SECRETE_KEY = 'somekey'
+
+app.config['SECRETE_KEY'] = SECRETE_KEY
+app.secret_key = SECRETE_KEY
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+
+setuDb(app)
+# Run Once
+# delete_all_create_all()
+
+class UploadForm(FlaskForm):
+    file = wtforms.FileField("file")
+    upload = wtforms.SubmitField("upload")
+
+@app.route('/up-form',methods=['POST','GET'])
+def uploa():
+    form = UploadForm()
+    if form.validate_on_submit():
+        file = UploadForm().file.data #grab the file
+        print((file))
+        file.save(os.path.join(os.path.abspath(os.path.dirname(__file__)),app.config['ULOPAD_FOLDER'],secure_filename(file)))
+         # save file
+
+    return render_template('pages/up-form.html',form=form)
+
+@app.route('/loaded')
+def done():
+    return "File Saved"
+
+
 
 @app.route('/')
 def home():
@@ -15,38 +54,80 @@ def home():
 
 @app.route('/user-select')
 def user_select():
-    return render_template('pages/library.html',nav=True,title='Library || User select',help=False,FAQ=True,start_btn=False,year_selection=False)
+    return render_template('pages/library.html',nav=True,title='Library',help=False,FAQ=True,start_btn=False,year_selection=False)
 
 @app.route('/select-question')
 def user_select_question():
     return render_template('pages/select-paper.html',nav=True,title="Select question",HELP=True,start_btn=False,year_selection=True,year="2019",years=current_years)
-
-@app.route('/questions')
-def get_questions():
-    return render_template('pages/get_questions.html',nav=True,title="Questions",FAQ=True,year_selection=True,year="2019",years=current_years,data={'course_title':'Advanced Database',"questions":[]})
-
-
-@app.route('/questions/selected/<string:doc_name>')
-def get_selected(doc_name):
-    document_name = doc_name.split('.')[0]
-    return render_template('pages/selected.html',nav=False,document='questions/{}'.format(document_name) + '.pdf',title=document_name)
 
 
 @app.route('/upload')
 def new_question():
     return render_template('pages/upload.html',title='Upload',HELP=True,start_btn=True)
 
-@app.route('/questions',methods=['POST'])
 
-def post_question():
-    # file = request.files['question-paper']
-    # full_filename = os.path.join(app.config['UPLOAD_FOLDER'],'logo.png')
-    # file.save(full_filename)
-    print(request.content_type)
-    # print(request.get_data())
-    print(request.files)
+
+
+@app.route('/questions')
+@app.route('/question')
+def get_questions():
+        req = request.args
+        program = req['program']
+        level = req['level']
+        course = req['course']
+        year = req['year']
+        questions = [
+                {"id":ques.id,"file":send_file(BytesIO(ques.file),download_name=ques.file_name,as_attachment=False),"semester":ques.semester,"file_name":ques.file_name} for ques in Question.query.filter(Question.year == year,Question.program == program, Question.course_name == course, Question.level == level).all()
+                ]
+
+         
+        return render_template('pages/get_questions.html',nav=True,title="Questions",FAQ=True,year_selection=True,year=year,years=current_years,data={'course_title':course,"questions":questions,"total":len(questions)})
+        # return questions[0]['file']
+   
+@app.route('/test-form')
+def test():
+    return render_template('pages/test_form.html')
+
+@app.route('/test-form',methods=['POST'])
+def post_form():
+    print(request)
     return jsonify({})
 
+@app.route('/questions',methods=['POST'])
+@app.route('/question',methods=['POST'])
+def post_question():
+    file = request.files['question-paper'].read()
+    form = request.form
+    year = form['year']
+    program = form['program']
+    course = form['course']
+    file_name = request.files['question-paper'].filename
+    level = form['level']
+    semester = form['semester']
+
+    question = Question(course,year,program,file,file_name,level,semester)
+    question.insert()
+    id = question.id
+    b_file = question.file
+
+    return url_for('new_question')
+
+# sever image to frontend
+@app.route('/show-question/<int:ques_id>')
+def show(ques_id):
+    question = Question.query.filter(Question.id == ques_id).one_or_none()
+    print(question.course_name)
+    if question != None:
+        return send_file(BytesIO(question.file),download_name=question.file_name,as_attachment=False)
+    abort(404)
+
+
+@app.route('/selected/<int:ques_id>')
+def get_selected(ques_id):
+    question = Question.query.filter(Question.id == ques_id).one_or_none()
+    if question != None:
+        return render_template('pages/selected.html',course_title=question.course_name,id=question.id,title=question.course_name)
+    abort(404)
 
 
 
