@@ -18,7 +18,8 @@
             </p>
         </div>
         <div class="container bg-secondary  p-5 rounded-lg d-flex justify-content-center align-items-center form-wrapper">
-            <form id="library-form" class="form text-center p-0 w-100 form-control form-wrapper" >
+            
+            <form id="library-form" class="form text-center p-0 w-100 form-control form-wrapper" method="post" action="{{url_for('get_questions')}}" >
                 <div class="container w-20">
                     <select class="level form-control py-2 my-3 form-data bg-black text-white" id="program" name="program">
                         <option value="--select program--" class="form-control">--Select Program--</option>
@@ -58,6 +59,7 @@
                         <option value="2021" class="form-control">2021</option>
                     </select>
                 </div>
+                <input type="file" name="question-paper" id="question-paper">
                 <div class="container d-flex justify-content-end">
                     <button type="submit" id="submit" class="btn btn-secondary bg-black text-white  px-5">Search</button>
                 </div>

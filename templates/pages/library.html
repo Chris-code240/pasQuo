@@ -4,20 +4,22 @@
 {% endblock %}
 {%block content %}
     <section class="container d-flex flex-column align-items-center justify-content-center p-3">
-        <div class="container my-2">
+        <div class="container my-2 ">
             <h1 class="text-center">
                 Welcome to the Library
             </h1>
-            <p class="text-center w-10">
-                Access a list of all your pas
-                questionst from 2017 to date .
-            </p>
+            <div class="container small-text p-0">
+                <p class="text-center w-10 ">
+                    Access a list of all your pas
+                    questionst from 2017 to date .
+                </p>
+            </div>
         </div>
         <div class="container bg-secondary  p-5 rounded-lg d-flex justify-content-center align-items-center form-wrapper">
             <form  id="form" class="form text-center p-0 w-100 form-control form-wrapper" action="{{url_for('get_questions')}}" method="GET">
                 <div class="container w-20">
                     <select class="level form-control py-2 my-3 form-data bg-black text-white" id="program" name="program">
-                        <option value="--select program--" class="form-control">--Select Program--</option>
+                        <option value="" class="form-control">--Select Program--</option>
                         <option value="Bsc Computer Science" class="form-control">Bsc Computer Science</option>
                         <option value="Bsc Information Technology" class="form-control">Bsc Information Technology</option>
                     </select>
@@ -25,7 +27,7 @@
     
                 <div class="container">
                     <select class="level form-control py-2 my-3 form-data bg-black text-white" id="level" name="level">
-                        <option value="--select level--">--Select Level--</option>
+                        <option value="">--Select Level--</option>
                         <option value="100" class="form-control">100</option>
                         <option value="200" class="form-control">200</option>
                         <option value="300" class="form-control">300</option>
@@ -35,7 +37,7 @@
     
                 <div class="container">
                     <select class="level form-control py-2 my-3 form-data bg-black text-white" id="course" name="course">
-                        <option value="--select course--">--Select Course--</option>
+                        <option value="">--Select Course--</option>
                         <option value="Advanced Database" class="form-control">Advanced</option>
                         <option value="Numerical Methods" class="form-control">Numerical Methods</option>
                         <option value="Software Engineering" class="form-control">Software Enginerring</option>
@@ -47,7 +49,7 @@
     
                 <div class="container">
                     <select class="level form-control py-2 my-3 form-data bg-black text-white" id="year" name="year">
-                        <option value="--select year--" class="form-control">--Select Year--</option>
+                        <option value="" class="form-control">--Select Year--</option>
                         <option value="2017" class="form-control">2017</option>
                         <option value="2018" class="form-control">2018</option>
                         <option value="2019" class="form-control">2019</option>
@@ -62,20 +64,18 @@
             </form>
         </div>
     </section>
-    <script>
-       // let form = document.getElementById('form')
-        //form.onsubmit = (e)=>{
-            
-          //  let year = document.getElementById('year').value
-            //let prog = document.getElementById('program').value
-            //let level = document.getElementById('level').value
-            //let course = document.getElementById('course').value
 
-            //let req = new XMLHttpRequest()
-            //req.setRequestHeader('Content-Type','application/json')
-            //req.open('GET','/question')
-           // req.send(JSON.stringify({"year":year,"program":prog,"level":level,"course":course}))
-            //alert(Request.arguments)
-        //}
+    
+
+    <script>
+        let form = document.getElementById('form')
+        let arr = Array.from(document.getElementsByTagName('select'))
+        form.addEventListener('submit',(event)=>{
+            arr.forEach(ele=>{
+                if (ele.value.length <= 1){
+                    event.preventDefault()
+                }
+            })
+        },false)
     </script>
 {%endblock %}

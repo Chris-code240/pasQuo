@@ -4,65 +4,90 @@
 {% endblock %}
 {%block content %}
     <section class="container d-flex flex-column align-items-center justify-content-center p-3">
-        <div class="container my-2">
-            <h1 class="text-center h1">
-                Make a Choice
+        <div class="container my-2 ">
+            <h1 class="text-center">
+                Make A Choice
             </h1>
-            <p class="text-center w-10">
-                Choose from a list of all past
-                questions in the university's domain from 2017 to date .
-            </p>
+            <div class="container small-text p-0">
+                <p class="text-center w-10 ">
+                    Select from a list of past
+                    questions from 2017 to date .
+                </p>
+            </div>
         </div>
-        <div class="container bg-secondary  px-5 py-2 rounded-lg d-flex justify-content-center align-items-center form-wrapper">
-            <form action="/questions" class="form text-center p-0 w-100">
-                    
-                <div class="container">
-                    <label for="year" class="label form-control form-wrapper border-0 text-start">Year</label>
-                    <select class="level form-control  form-data bg-black text-white" id="year" name="year">
-                        <option value="--select level--">--Select Year--</option>
-                        <option value="2017">2017</option>
-                        <option value="2018">2018</option>
-                        <option value="2019">2019</option>
-                        <option value="2020">2020</option>
-                        <option value="2021">2021</option>
-                    </select>
-                </div>
+        <div class="container bg-secondary  p-5 rounded-lg d-flex justify-content-center align-items-center form-wrapper">
+            <form  id="form" class="form text-center p-0 w-100 form-control form-wrapper" action="{{url_for('get_questions')}}" method="GET">
                 <div class="container w-20">
-                    <label for="program" class="label form-control form-wrapper border-0 text-start">Program</label>
-                    <select class="level form-control form-data bg-black text-white" id="program" name="program">
-                        <option value="--select program--">--Select Program--</option>
-                        <option value="Bsc Computer Science">Bsc Computer Science</option>
-                        <option value="Bsc Information Technology">Bsc Information Technology</option>
+                    <select class="level form-control py-2 my-3 form-data bg-black text-white" id="program" name="program">
+                        <option value="" class="form-control">--Select Program--</option>
+                        <option value="Bsc Computer Science" class="form-control">Bsc Computer Science</option>
+                        <option value="Bsc Information Technology" class="form-control">Bsc Information Technology</option>
                     </select>
                 </div>
     
+                <div class="container">
+                    <select class="level form-control py-2 my-3 form-data bg-black text-white" id="level" name="level">
+                        <option value="">--Select Level--</option>
+                        <option value="100" class="form-control">100</option>
+                        <option value="200" class="form-control">200</option>
+                        <option value="300" class="form-control">300</option>
+                        <option value="400" class="form-control">400</option>
+                    </select>
+                </div>
     
                 <div class="container">
-                    <label for="course" class="label form-control form-wrapper border-0 text-start">Course</label>
-                    <select class="level form-control  form-data bg-black text-white" id="course" name="course">
-                        <option value="--select course--">--Select Course--</option>
-                        <option value="100">Advanced</option>
-                        <option value="200">Numerical Methods</option>
-                        <option value="300">Software Enginerring</option>
-                        <option value="400">Computer Architecture</option>
+                    <select class="level form-control py-2 my-3 form-data bg-black text-white" id="course" name="course">
+                        <option value="">--Select Course--</option>
+                        <option value="Advanced Database" class="form-control">Advanced</option>
+                        <option value="Numerical Methods" class="form-control">Numerical Methods</option>
+                        <option value="Software Engineering" class="form-control">Software Enginerring</option>
+                        <option value="Computer Architecture" class="form-control">Computer Architecture</option>
+                        <option value="Analytical Reading and Reasoning" class="form-control">Analytical Reading and Reasoning</option>
                     </select>
                 </div>
                 
+    
                 <div class="container">
-                    <label for="level" class="label form-control form-wrapper border-0 text-start">Level</label>
-                    <select class="level form-control  form-data bg-black text-white" id="level" name="level">
-                        <option value="--select level--">--Select Level--</option>
-                        <option value="100">100</option>
-                        <option value="200">200</option>
-                        <option value="300">300</option>
-                        <option value="400">400</option>
+                    <select class="level form-control py-2 my-3 form-data bg-black text-white" id="year" name="year">
+                        <option value="" class="form-control">--Select Year--</option>
+                        <option value="2017" class="form-control">2017</option>
+                        <option value="2018" class="form-control">2018</option>
+                        <option value="2019" class="form-control">2019</option>
+                        <option value="2020" class="form-control">2020</option>
+                        <option value="2021" class="form-control">2021</option>
+                        <option value="2022" class="form-control">2022</option>
                     </select>
                 </div>
-
-                <div class="container">
-                    <button type="submit" class="btn btn-secondary bg-black text-white text-start px-4 my-3">Search</button>
+                <div class="container d-flex justify-content-end">
+                    <button type="submit" class="btn btn-secondary bg-black text-white  px-5">Search</button>
                 </div>
             </form>
         </div>
     </section>
+
+    
+
+    <script>
+        let form = document.getElementById('form')
+        let arr = Array.from(document.getElementsByTagName('select'))
+        form.addEventListener('submit',(event)=>{
+            arr.forEach(ele=>{
+                if (ele.value.length <= 1){
+                    event.preventDefault()
+                }
+            })
+        },false)
+
+        let form_year = document.getElementById('year')
+        let nav_year = document.getElementById('nav-year')
+        form_year.addEventListener('change',()=>{
+            Array.from(nav_year.children).forEach(ele=>{
+                if(form_year.value == ele.value){
+                    ele.setAttribute('selected',true)
+                }else{
+                    ele.removeAttribute('selected')
+                }
+            })
+        },false)
+    </script>
 {%endblock %}

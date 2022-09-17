@@ -2,3 +2,8 @@
     border-radius: 3rem !important;
     background-color: #d9d9d9 !important;
 }
+
+.small-text{
+    width: min(20rem,15rem);
+    margin:  0 auto;
+}
