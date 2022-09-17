@@ -5,12 +5,13 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 
 # Enable debug mode.
 DEBUG = True
-
-# Connect to the database
+"""@TODO change the database name and password"""
+DB_NAME = 'pasquo1'
+DB_PASSWORD = 'Liukangs240'
 
 
 # IMPLEMENT DATABASE URL
-SQLALCHEMY_DATABASE_URI = 'postgresql://postgres:Liukangs240@localhost:5432/pasquo1'
+SQLALCHEMY_DATABASE_URI = 'postgresql://postgres:{0}@localhost:5432/{1}'.format(DB_PASSWORD,DB_NAME)
 SQLALCHEMY_TRACK_MODIFICATIONS = True
 
 SESSION_COOKIE_DOMAIN = False

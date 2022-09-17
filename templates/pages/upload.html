@@ -7,12 +7,7 @@
 {% endblock %}
 {%block content %}
 <!-- Modal -->
-    
-<!-- <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModalCenter">
-    Launch demo modal
-  </button> -->
-  
- 
+
     <section class="container d-flex flex-column align-items-center justify-content-center p-3">
         <div class="container my-2">
             <h1 class="text-center h1">
@@ -46,6 +41,7 @@
                         <option value="--select program--">--Select Program--</option>
                         <option value="Bsc Computer Science" class="form-control">Bsc Computer Science</option>
                         <option value="Bsc Information Technology" class="form-control">Bsc Information Technology</option>
+                        <option value="Bsc Electrical Engineering" class="form-control">Bsc Electrical Engineering</option>
                     </select>
                 </div>
     
@@ -54,12 +50,14 @@
                     <label for="course" class="label form-control form-wrapper border-0 text-start">Course</label>
                     <select class="level form-control  form-data bg-black text-white" id="course" name="course">
                         <option value="--select course--">--Select Course--</option>
-                        <option value="Advanced Database" class="form-control">Advanced</option>
+                        <option value="Advanced Database" class="form-control">Advanced Database</option>
+                        <option value="Digital Electronics" class="form-control">Digital Electronics</option>
                         <option value="Numerical Methods" class="form-control">Numerical Methods</option>
                         <option value="Software Engineering" class="form-control">Software Enginerring</option>
                         <option value="Computer Architecture" class="form-control">Computer Architecture</option>
                         <option value="Data Communication and Network" class="form-control">Data Communication and Network</option>
                         <option value="Analytical Reading and Reasoning" class="form-control">Analytical Reading and Reasoning</option>
+                        <option value="Economics For I.T Professionals" class="form-control">Economics For I.T Professionals</option>
                     </select>
                 </div>
                 <div class="container">
@@ -145,20 +143,31 @@
 <script>
     let form = document.getElementById('upload-form')
     let arr = Array.from(document.getElementsByTagName('select'))
+    
+    let year = document.getElementById('year')
+    let level = document.getElementById('level')
+    let program = document.getElementById('program')
+    let semester = document.getElementById('semester')
+    let course = document.getElementById('course')
+    let file = document.querySelector('input[type="file"]')
+
+    let controller = new AbortController()
+    let signal = controller.signal
+
+    signal.addEventListener('abort',()=>{
+        $('#modal-empty').modal('show')
+    },false)
+
     form.addEventListener('submit',(event)=>{
         event.preventDefault()
-        let controller = new AbortController()
-                let year = document.getElementById('year')
-                let level = document.getElementById('level')
-                let program = document.getElementById('program')
-                let semester = document.getElementById('semester')
-                let course = document.getElementById('course')
-                let file = document.querySelector('input[type="file"]')
+                //check for empty fields
                 Array.from(document.getElementsByTagName('select')).forEach(ele=>{
-                    if (ele.value == ""){
+                    if (ele.value == "" || !file.files[0]){
                         controller.abort()
                     }
                 })
+
+                
                 let formdata = new FormData()
                 formdata.append('year',year.value)
                 formdata.append('course',course.value)
@@ -167,10 +176,11 @@
                 formdata.append('semester',semester.value)
                 formdata.append('file',file.files[0])
 
+                //initiate request
                 fetch('/questions', {
                     method: 'POST',
                     body: formdata,
-                    signal: controller.signal
+                    signal: signal
                   })
                     .then((response) => response.json())
                     .then((result) => {
@@ -181,5 +191,10 @@
                       console.error('Error:', error);
                     });
     },false)
+
+    course.addEventListener('change',()=>{
+      console.log(course.value)
+  })
+
 </script>
 {%endblock %}

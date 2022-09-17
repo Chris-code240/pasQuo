@@ -22,6 +22,7 @@
                         <option value="" class="form-control">--Select Program--</option>
                         <option value="Bsc Computer Science" class="form-control">Bsc Computer Science</option>
                         <option value="Bsc Information Technology" class="form-control">Bsc Information Technology</option>
+                        <option value="Bsc Electrical Engineering" class="form-control">Bsc Electrical Engineering</option>
                     </select>
                 </div>
     
@@ -38,11 +39,14 @@
                 <div class="container">
                     <select class="level form-control py-2 my-3 form-data bg-black text-white" id="course" name="course">
                         <option value="">--Select Course--</option>
-                        <option value="Advanced Database" class="form-control">Advanced</option>
+                        <option value="Advanced Database" class="form-control">Advanced Database</option>
                         <option value="Numerical Methods" class="form-control">Numerical Methods</option>
                         <option value="Software Engineering" class="form-control">Software Enginerring</option>
                         <option value="Computer Architecture" class="form-control">Computer Architecture</option>
                         <option value="Analytical Reading and Reasoning" class="form-control">Analytical Reading and Reasoning</option>
+                        <option value="Data Communication and Network" class="form-control">Data Communication and Network</option>
+                        <option value="Economics For I.T Professionals" class="form-control">Economics For I.T Professionals</option>
+                        <option value="Digital Electronics" class="form-control">Digital Electronics</option>
                     </select>
                 </div>
                 
@@ -58,24 +62,50 @@
                         <option value="2022" class="form-control">2022</option>
                     </select>
                 </div>
-                <div class="container d-flex justify-content-end">
+                <div class="container d-flex justify-content-start">
                     <button type="submit" class="btn btn-secondary bg-black text-white  px-5">Search</button>
                 </div>
             </form>
         </div>
     </section>
-
+    <div class="modal fade" id="modal-empty" tabindex="-1" role="dialog" aria-labelledby="modal-dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="modal-title">Empty Fields</h5>
+              <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              Please fill all fields.
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-warning mx-2" data-bs-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
     
 
     <script>
         let form = document.getElementById('form')
         let arr = Array.from(document.getElementsByTagName('select'))
+        let controller = new AbortController()
+        let signal = controller.signal
+        signal.addEventListener('abort',()=>{
+            $('#modal-empty').modal('show')
+        },false)
+
         form.addEventListener('submit',(event)=>{
             arr.forEach(ele=>{
                 if (ele.value.length <= 1){
                     event.preventDefault()
+                    controller.abort()
                 }
             })
         },false)
+
+      
     </script>
 {%endblock %}

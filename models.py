@@ -1,4 +1,3 @@
-from sqlite3 import ProgrammingError
 from flask import Flask,json,jsonify
 from flask_sqlalchemy import SQLAlchemy
 

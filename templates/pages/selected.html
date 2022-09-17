@@ -7,15 +7,17 @@
 {%block content %}
     <section class="container">
         <h1 class="text-center my-2">{{course_title}}</h1>
-        <div class="container wrapper py-2">
-        <div class="container embed-responsive w-100">
-            <iframe src="/show-question/{{id}}" class="embed-responsive-item" frameborder="0"></iframe>
+        <div class="container wrapper py-2 p-sm-0">
+        <div class="container embed-responsive p-sm-0">
+            <iframe src="/show-question/{{id}}" class="embed-responsive-item w-100" frameborder="0"></iframe>
         </div>
         <div class="container btn-wrapper d-flex justify-content-end my-3 align-items-center">
                 <button class="btn btn-secondary px-5 py-2 " id="go-back">&xlarr;Go Back</button>
-                <a href="#">
+                {% if next == True %}
+                <a href="/selected/{{next_id}}">
                     <button class="btn btn-secondary px-5 py-2 " id="next">Next &xrarr;</button>
                 </a>
+                {% endif %}
         </div>
         </div>
     </section>

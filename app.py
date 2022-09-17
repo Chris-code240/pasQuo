@@ -1,10 +1,9 @@
+
 from io import BytesIO
 import os
 from flask import Flask,request,abort,json,jsonify,render_template,url_for,flash,send_file,Response
 from werkzeug.utils import secure_filename
 from flask_wtf import FlaskForm
-
-import wtforms
 from models import *
 
 
@@ -39,7 +38,7 @@ def user_select():
 def user_select_question():
     return render_template('pages/select-paper.html',nav=True,title="Select question",HELP=True,start_btn=False,year_selection=True,year="2022",years=current_years)
 
-@app.route('/upload')
+@app.route('/upload',methods=['POST','GET'])
 def new_question():
     return render_template('pages/upload.html',title='Upload',HELP=True,start_btn=True)
 
@@ -55,18 +54,22 @@ def get_questions():
         level = req['level']
         course = req['course']
         year = req['year']
+
         questions = [
                 {"id":ques.id,"file":send_file(BytesIO(ques.file),download_name=ques.file_name,as_attachment=False),"semester":ques.semester,"file_name":ques.file_name} for ques in Question.query.filter(Question.year == year,Question.program == program, Question.course_name == course, Question.level == level).all()
-                ]
-        return render_template('pages/get_questions.html',nav=True,title="Questions",FAQ=True,year_selection=True,year=year,years=current_years,data={'course_title':course,"questions":questions,"total":len(questions)})
+                ] 
+        if len(questions) < 1:
+            abort(404)
+        else:
+            return render_template('pages/get_questions.html',nav=True,title="Questions",FAQ=True,year_selection=True,year=year,years=current_years,data={'course_title':course,"questions":questions,"total":len(questions)})
         # return questions[0]['file']
     except:
-        abort(422)
+        abort(404)
 
         
 """Add new question to the database"""  
-@app.route('/questions',methods=['POST'])
-@app.route('/question',methods=['POST'])
+@app.route('/questions',methods=['POST','GET'])
+@app.route('/question',methods=['POST','GET'])
 def post_question():
     try:
         file = request.files['file'].read()
@@ -80,12 +83,12 @@ def post_question():
 
         question = Question(course,year,program,file,file_name,level,semester)
         question.insert()
+        print(question.id,"<-- I D")
+        print(question.course_name,"<-- Name")
         res = {"success":True,"message":"Question uploaded successfully"}
-        # return render_template('pages/upload.html',title='Upload',HELP=True,start_btn=True)
         return jsonify(res)
     except:
         return jsonify({"success":False})
-        # abort(422)
 
 """Serve document to a view"""
 @app.route('/show-question/<int:ques_id>')
@@ -99,16 +102,32 @@ def show(ques_id):
 """View selected document"""
 @app.route('/selected/<int:ques_id>')
 def get_selected(ques_id):
+    print("######### I D ##########")
+    print(ques_id)
     question = Question.query.filter(Question.id == ques_id).one_or_none()
-    if question != None:
-        return render_template('pages/selected.html',course_title=question.course_name,id=question.id,title=question.course_name)
-    abort(404)
+    questions = [ques for ques in  Question.query.filter(Question.year == question.year, Question.course_name == question.course_name,Question.semester == question.semester).all()]
+    next_id = 0
+    
+    if question != None and not '--' in question.course_name:
+        return render_template('pages/selected.html',course_title=question.course_name,id=question.id,title=question.course_name,year=question.year)
+    if len(questions) == 2:
+        next_id = questions[1]['id']
+    if next_id != 0:
+        next = True
+    else:
+        next = False
+    return render_template('error/404.html',title='404',FAQ=True,next=next,next_id=next_id)
 
 
-@app.route('/test-post',methods=['POST'])
-def test():
-    print(request.form['year'])
-    print(not request.files['file'])
-    return jsonify({"success":True})
 
+"""Error Handlers"""
+
+@app.errorhandler(404)
+def not_fount(error):
+    return render_template('error/404.html',title="404",FAQ=True)
+
+
+@app.errorhandler(405)
+def method_not_allowed(error):
+    return render_template('error/405.html',title="405",FAQ=True)
 

@@ -1,0 +1,12 @@
+
+
+@media screen and (max-width:768px) {
+    #nav-menu button,#nav-menu select{
+        background-color: #d9d9d9 ;
+        /* actually does nothing, for now */
+    }
+}
+
+.start-btn{
+    border: none !important;
+}
