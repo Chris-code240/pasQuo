@@ -12,8 +12,7 @@ app = Flask(__name__)
 app.config.from_object('config')
 
 current_years = ["2022","2021","2020","2019","2018","2017"]
-# APP_ROOT = os.path.dirname(os.path.abspath(__file__))
-# UPLOAD_FOLDER = os.path.join(APP_ROOT,'static','questions')
+
 
 UPLOAD_FOLDER = 'static/questions'
 SECRETE_KEY = '_0__00__0_uenr_pasquo'
