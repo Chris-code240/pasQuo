@@ -1,7 +1,7 @@
 {%block content %}
 <div class="container py-0">
     {% if nav != False %}
-    <nav class="navbar navbar-expand-lg bg-secondary nav-wrapper navbar-dark my-3 py-0">
+    <nav class="navbar navbar-expand-lg bg-secondary nav-wrapper navbar-dark mt-1 py-0" id="navbar">
         <a href="/" class="navbar-brand bg-black text-white py-3 px-3">UENR PASQUO</a>
         <button class="navbar-toggler m-2" type="button" data-bs-toggle="collapse" data-bs-target="#nav-menu">
             <span class="navbar-toggler-icon"></span>
@@ -21,7 +21,7 @@
                 <li class="nav-item d-flex align-items-center d-flex align-items-center mx-2">
                     {% if start_btn == True %}
                     <a href="/user-select" class="nav-link text-black">
-                        <button class="btn bg-white text-black px-4">START</button>
+                        <button class="btn bg-white text-black px-4 border-0">START</button>
                     </a>
                     {% endif %}
                 </li>

@@ -1,0 +1,22 @@
+.h1{
+    font-size: 4.7vw;
+}
+.p{
+    font-size: 2vw !important;
+    font-weight: unset !important;
+}
+
+@media screen and (max-width:768px) {
+    .p{
+        font-size: unset !important;
+        font-weight: unset !important;
+        margin: 0 !important;
+    }
+    .h1{
+        font-size: 2.5rem;
+        margin: 1rem 0 !important;
+    }
+    .btn{
+        margin:1rem 0 !important;
+    }
+}

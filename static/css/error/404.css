@@ -1,0 +1,6 @@
+@media screen and (min-width:768px) {
+    img{
+        width: 40% !important;
+        border: 1px solid black !important;
+    }
+}

@@ -1,6 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap');
 body{
-    font-family: Poppins,sans-serif !important;
+    /* font-family: Poppins,Montserrat,sans-serif !important; */
+    font-family: Montserrat,Poppins,sans-serif;
 }
 .nav-wrapper{
     background-color: #d9d9d9 !important;

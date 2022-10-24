@@ -1,2 +1,51 @@
-Postgresql is a must
-In `config.py` look out for @TODO
+UenrPasquo
+-----
+
+## Introduction
+
+UenrPasquo is an online platform to serve students at the University of Energy and Natural Resources past examination question. This system comes very handy when students are especially preparing for their exams; being end of semester or mid semester exams.
+
+## Tech Stack (Dependencies)
+
+### 1. Backend Dependencies
+The tech stack include the following:
+ * **SQLAlchemy ORM** to be our ORM library of choice
+ * **PostgreSQL** as our database of choice
+ * **Python3** and **Flask** as our server language and server framework
+You can download and install the dependencies mentioned above using `pip` as:
+```
+pip install virtualenv
+pip install SQLAlchemy
+pip install postgres
+pip install Flask
+pip install Flask-Migrate
+```
+> **Note** - If we do not mention the specific version of a package, then the default latest stable package will be installed. 
+
+### 2. Frontend Dependencies
+```
+For now all you need is **HTML5**,**CSS3**
+```
+
+
+1. **Install the dependencies:**
+```
+pip install -r requirements.txt
+```
+
+2. **Run the development server:**
+```
+export FLASK_APP=myapp
+export FLASK_ENV=development # enables debug mode
+python3 app.py
+
+OR (For Windows users)
+
+$env:FLASK_APP = 'app.py'
+$env:FLASK_ENV = 'development'
+flask run
+```
+
+3. **Verify on the Browser**<br>
+Navigate to project homepage [http://127.0.0.1:5000/](http://127.0.0.1:5000/) or [http://localhost:5000](http://localhost:5000) 
+

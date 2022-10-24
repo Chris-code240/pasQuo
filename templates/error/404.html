@@ -1,10 +1,33 @@
 {% extends 'layout/layout.html' %}
-
+{%block css %}
+<link rel="stylesheet" type="text/css" href="static/error/404.css">
+{%endblock %}
 {%block content %}
+    <style>
+        @media screen and (min-width:800px) {
+            #error{
+                width: 35vw !important;
+            }
+        }
+        .btn{
+            background-color: #d9d9d9 !important;
+        }
+    </style>
     <section class="container">
-        <div class="container">
-            <h1 class="text-center">Error 404</h1>
-            <p class="text-center">Resource not found...</p>
+        <div class="container d-flex justify-content-center align-items-center">
+            <img src="{{url_for('static',filename='img/404.png')}}" alt="" class="img-fluid w-100 w-md-50 go-back" id="error">
+        </div>
+        <div class="container d-flex justify-content-center align-items-center">
+            <button class="btn btn-secondary px-5 py-2 border-0 text-black go-back">
+                Go Back
+            </button>
         </div>
     </section>
+    <script>
+        Array.from(document.getElementsByClassName('go-back')).forEach(ele=>{
+            ele.addEventListener('click',()=>{
+                history.back()
+            })
+        })
+    </script>
 {%endblock %}

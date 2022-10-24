@@ -16,7 +16,7 @@ current_years = ["2022","2021","2020","2019","2018","2017"]
 # UPLOAD_FOLDER = os.path.join(APP_ROOT,'static','questions')
 
 UPLOAD_FOLDER = 'static/questions'
-SECRETE_KEY = 'somekey'
+SECRETE_KEY = '_0__00__0_uenr_pasquo'
 
 app.config['SECRETE_KEY'] = SECRETE_KEY
 app.secret_key = SECRETE_KEY
@@ -37,7 +37,7 @@ def user_select():
 @app.route('/select-question')
 def user_select_question():
     return render_template('pages/select-paper.html',nav=True,title="Select question",HELP=True,start_btn=False,year_selection=True,year="2022",years=current_years)
-
+@app.route('/admin')
 @app.route('/upload',methods=['POST','GET'])
 def new_question():
     return render_template('pages/upload.html',title='Upload',HELP=True,start_btn=True)
