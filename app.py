@@ -23,7 +23,7 @@ setuDb(app)
 # Run Once
 # delete_all_create_all()
 
-@app.route('/')
+@app.route('/',methods=['GET'])
 def home():
     return render_template('pages/home.html',nav=True,title='Home',help=False,FAQ=True,start_btn=True,year_selection=False)
 
