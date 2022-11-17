@@ -1,12 +1,10 @@
 
-
-li = [1,2,3,4]
-li.pop(1)
-print(li)
+import pathlib
+from re import search
 
 
-    # if file.filename == '':
-    #     abort(403)
-    # fileName = secure_filename(file.filename)
-    # file.save(os.path.join(app.config['UPLOAD_FOLDER'],fileName))
-    # flash('FIle uploaded Successfully')
+pattern = "^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$"
+
+print(search(pattern,"duah.marfochristian@gmail.com"))
+
+print(pathlib.Path("app.py").suffix == ".txt")

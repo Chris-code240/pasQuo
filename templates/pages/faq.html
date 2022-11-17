@@ -1,0 +1,186 @@
+{% extends 'layout/layout.html' %}
+{%block css%}
+<link rel="stylesheet" href="{{url_for('static',filename='css/pages/faq.css')}}">
+{%endblock %}
+{%block content %}
+<section class="text-light p-5">
+
+
+    <div class="container my-4">
+        <h2 class="text-center text-dark my-4 font-bold">Frequently Asked Questions</h2>
+        <div class="row text-center gy-4">
+            <div class="col-md">
+                <div class="card border border-secondary text-dark">
+                    <div class="card-body text-center">
+                        <div class="h1 mb-3"><i class="fa fa-laptop text-light"></i></div>
+                    <h3 class="card-title mb-3">Who Can Upload</h3>
+                    <p class="card-text pb-2">
+                        Lecturers at the university are the only users with the priviledge of uploading questions unto this system.
+                    </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md">
+                <div class="card border border-secondary text-dark">
+                    <div class="card-body text-center">
+                        <div class="h1 mb-3"><i class="fa fa-user text-light"></i></div>
+                    <h3 class="card-title mb-3">Do I have to pay</h3>
+                    <p class="card-text">
+                        No user will be charged any amount before querying data. The system is free for anyone.
+                    </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md">
+                <div class="card border border-secondary text-dark">
+                    <div class="card-body text-center">
+                        <div class="h1 mb-3"><i class="fa fa-user text-light"></i></div>
+                    <h3 class="card-title mb-3">Is index number required</h3>
+                    <p class="card-text">
+                        No! Only a lecturer will be given a special ID to fully utilise privilidges.
+                    </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container my-4 py-4">
+        <div class="row text-center gy-4">
+            <div class="col-md">
+                <div class="card border border-secondary text-dark">
+                    <div class="card-body text-center">
+                        <div class="h1 mb-3"><i class="fa fa-laptop text-light"></i></div>
+                    <h3 class="card-title mb-3">Question Not Found</h3>
+                    <p class="card-text">
+                        The system is a work in progress. Gradually, all past examination questions in the institution's domain will be online.
+                    </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md">
+                <div class="card border border-secondary text-dark ">
+                    <div class="card-body text-center">
+                        <div class="h1 mb-3"><i class="fa fa-user text-light"></i></div>
+                    <h3 class="card-title mb-3">When is the system online</h3>
+                    <p class="card-text">
+                        The system is online 24 hours a day, 7 days a week. You can access anytime anywhere.
+                    </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md">
+                <div class="card border border-secondary text-dark">
+                    <div class="card-body text-center">
+                        <div class="h1 mb-3"><i class="fa fa-user text-light"></i></div>
+                    <h3 class="card-title mb-3">Can I make suggestions</h3>
+                    <p class="card-text">
+                        All your suggestions are welcomed. Please check the sectio below to get intouch
+                    </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <h2 class="text-center text-dark my-4">Contact</h2>
+            <div class=" mb-3 news-input flex flex-col">
+                <input type="email" id="email"  class="form-control my-2" placeholder="Email">
+                <textarea name="message" class="form-control my-2" id="message" cols="30" rows="10" placeholder="Message"></textarea>
+                <button class="btn btn-dark btn-lg form-control" type="button" id="submit" aria-label="some text">
+                    search
+                </button>
+            </div>
+    </div>
+
+    <!-- Success Modal -->
+    <div class="modal fade" id="modal-success" tabindex="-1" role="dialog" aria-labelledby="modal-dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title text-dark" id="modal-title">Request Sent</h5>
+              <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body text-dark">
+              We can assure you that we have receive your request, and we shall get aback to you ASAP!
+            </div>
+            <div class="modal-footer">
+              <a href="" data-bs-dismiss="modal" aria-label="Close">
+                <button type="button" class="btn btn-secondary mx-2">Close</button>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    
+      <!-- Error Modal -->
+      <div class="modal fade" id="modal-error" tabindex="-1" role="dialog" aria-labelledby="modal-dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title text-dark" id="modal-title">Error</h5>
+              <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body text-dark">
+              Coud not submit your request. Try again
+            </div>
+            <div class="modal-footer">
+              <a href="" class="close" data-bs-dismiss="modal" aria-label="Close">
+                <button type="button" class="btn btn-secondary mx-2">Close</button>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    <!-- Modal Empty -->
+      <div class="modal fade" id="modal-empty" tabindex="-1" role="dialog" aria-labelledby="modal-dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title text-dark" id="modal-title">Not Sent</h5>
+              <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body text-dark">
+                Please check that you have provided valid email and message.
+            </div>
+            <div class="modal-footer">
+              <a href="/">
+                <button type="button" class="btn btn-secondary mx-2">Close</button>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    
+</section>
+<script>
+    let message = document.getElementById('message')
+    let submit = document.getElementById('submit')
+    let email = document.getElementById('email')
+
+    submit.addEventListener('click',()=>{
+        if(message.value != '' || email.value != ''){
+            fetch('/auth',{
+                headers:{"Content-type":"application/json"},
+                body:JSON.stringify({"message":message.value,"email":email.value}),
+                method:'POST'
+            }).then((res)=>{return res.json()}).then((jsonRes)=>{
+                if(jsonRes['success']){
+                    $('#modal-success').modal('show')
+                }else{
+                    $('#modal-error').modal('show')
+                }
+            }).catch((errer)=>{
+                $('#modal-error').modal('show')
+            })
+        }else{
+            $('#modal-empty').modal('show')
+        }
+    })
+</script>
+{%endblock %}

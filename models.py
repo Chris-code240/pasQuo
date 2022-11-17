@@ -40,4 +40,7 @@ class Question(db.Model):
         
     def update(self):
         db.session.commit()
+    
+    def question_format(self):
+        return {"course":self.course_name,"year":self.year,"program":self.program,"level":self.level,"semester":self.semester}
         

@@ -136,6 +136,25 @@
     </div>
   </div>
 
+  <div class="modal fade" id="modal-error" tabindex="-1" role="dialog" aria-labelledby="modal-dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="modal-title">ERROR</h5>
+          <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          Please check that the file has '.pdf' as extension
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-warning mx-2" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
     
     
 <script src="https://code.jquery.com/jquery-3.6.1.js" integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI=" crossorigin="anonymous"></script>
@@ -182,9 +201,13 @@
                     body: formdata,
                     signal: signal
                   })
-                    .then((response) => response.json())
+                    .then((response) => {return response.json()})
                     .then((result) => {
-                        $('#modal').modal('show')
+                        if(result['success']){
+                          $('#modal').modal('show')
+                        }else{
+                          $('#modal-error').modal('show')
+                        }
                       console.log('Success:', result);
                     })
                     .catch((error) => {

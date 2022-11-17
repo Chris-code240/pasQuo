@@ -1,7 +1,8 @@
 
 from io import BytesIO
-import os
-from flask import Flask,request,abort,json,jsonify,render_template,url_for,flash,send_file
+from re import search
+import pathlib
+from flask import Flask,request,abort,jsonify,render_template,send_file
 from models import *
 
 
@@ -77,13 +78,14 @@ def post_question():
         file_name = request.files['file'].filename
         level = form['level']
         semester = form['semester']
-
-        question = Question(course,year,program,file,file_name,level,semester)
-        question.insert()
-        print(question.id,"<-- I D")
-        print(question.course_name,"<-- Name")
-        res = {"success":True,"message":"Question uploaded successfully"}
-        return jsonify(res)
+        print(pathlib.Path(file_name).suffix == ".pdf")
+        if pathlib.Path(file_name).suffix == ".pdf":
+            question = Question(course,year,program,file,file_name,level,semester)
+            question.insert()
+            res = {"success":True,"message":"Question uploaded successfully"}
+            return jsonify(res)
+        else:
+            return jsonify({"success":False,"message":"File extension not .pdf"})
     except:
         return jsonify({"success":False})
 
@@ -115,7 +117,31 @@ def get_selected(ques_id):
         next = False
     return render_template('error/404.html',title='404',FAQ=True,next=next,next_id=next_id)
 
+# FAQ
+@app.route('/FAQ')
+def render_faq():
+    return render_template('pages/faq.html',nav=True,title='FAQ',help=False,FAQ=False,start_btn=True,year_selection=False)
 
+
+@app.route('/exist',methods=['POST'])
+def get_all_existing_questions():
+    questions = [ques.question_format() for ques in Question.query.all()]
+    return jsonify(questions)
+
+
+@app.route('/auth',methods=['POST'])
+def validate_email():
+    pattern = "^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$"
+    success = True
+    try:
+        req = request.get_json()
+        email = req['email']
+        success = not search(pattern,email)
+
+    except:
+        print(search(pattern,email))
+    print(search(pattern,email))
+    return jsonify({"success":not success})
 
 """Error Handlers"""
 
